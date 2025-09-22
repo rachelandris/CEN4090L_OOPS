@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column; /* Add this to stack items vertically */
+        }
+
+        .logo {
+            width: 200px; /* Adjust width as needed */
+            margin-bottom: 20px; /* Add some space below the logo */
+        }
+
+        .signup {
+            padding: 20px;
+            width: 300px; /* Make the box smaller */
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        .text-block-4 {
+            margin-bottom: 20px;
+        }
+
+        .link {
+            color: black;
+            text-decoration: underline;
+        }
+
+        footer {
+            background-color: #F1EFE7;
+            padding: 20px 0;
+            width: 100%;
+            position: absolute;
+            bottom: 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Logo -->
+    <img src="/static/images/OOPSlogo.svg" alt="OOPS Logo" class="logo">
+
+    <!-- Signup Form Section -->
+    <section class="signup">
+        <div class="container">
+            <h2>Sign Up</h2>
+            <form action="/signup" method="post" class="form"> 
+                <input class="username w-input" maxlength="256" name="username" placeholder="Username" type="text" id="username" required>
+                <input class="email w-input" maxlength="256" name="email" placeholder="Email" type="email" id="email" required>
+                <input class="password w-input" maxlength="256" name="password" placeholder="Password" type="password" id="password" required>
+                <!-- Optional: Add password confirmation field -->
+                <!-- <input class="password w-input" maxlength="256" name="confirm_password" placeholder="Confirm Password" type="password" id="confirm-password" required> -->
+                <button type="submit" class="signup-button w-button">Sign Up</button>
+            </form>
+            <div class="text-block-4">Already have an account? <a href="/login">Login here.</a></div>
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 OOPS. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

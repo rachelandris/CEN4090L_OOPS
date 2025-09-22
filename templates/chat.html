@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #chat {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #chat h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+        }
+
+        #chat-messages {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 20px;
+        }
+
+        #chat-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #message-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        #chat-form button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/listing">List Item</a></li>
+                <li><a href="/buying">Buy Item</a></li>
+                <li><a href="/">HomePage</a></li>
+                <li><a href="/cart">Shopping Cart</a></li>
+                <li><a href="/checkout">Checkout</a></li>
+                <li><a href="/chat">Chat</a></li> 
+                <li><a href="/favorites">Favorites</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="chat">
+            <div id="chat-messages"></div>
+            <form id="chat-form">
+                <input type="text" id="message-input" placeholder="Type your message...">
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // WebSocket connection for real-time chat
+        const socket = new WebSocket('ws://localhost:5000/ws/chat');
+
+        // Function to append messages to the chat area
+        function appendMessage(message) {
+            const chatMessages = document.getElementById('chat-messages');
+            const messageElement = document.createElement('div');
+            messageElement.innerText = message;
+            chatMessages.appendChild(messageElement);
+        }
+
+        // Handle form submission for sending messages
+        document.getElementById('chat-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const messageInput = document.getElementById('message-input');
+            const message = messageInput.value.trim();
+            if (message !== '') {
+                socket.send(message);
+                messageInput.value = '';
+            }
+        });
+
+        // WebSocket event listener for receiving messages
+        socket.addEventListener('message', function(event) {
+            const message = event.data;
+            appendMessage(message);
+        });
+    </script>
+</body>
+</html>

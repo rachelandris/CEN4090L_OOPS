@@ -1,0 +1,4 @@
+flask==2.2.2
+pycryptodome==3.20.0
+flask-socketio
+Flask-Mail

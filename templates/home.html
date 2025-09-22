@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        body {
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        nav {
+            background-color: #F1EFE7;
+            padding: 20px 0;
+            margin-bottom: 20px; /* Lower the navigation bar */
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border: 2px solid black;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        main {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #home {
+            text-align: center;
+        }
+
+        .search-bar {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .search-bar button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        img.logo {
+            width: 33.33vw;
+            margin-top: 20px;
+            display: block; /* Make the logo a block element */
+            margin-left: auto; /* Center the logo horizontally */
+            margin-right: auto;
+        }
+
+        /* Styles for recommended items */
+        #recommended-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-gap: 20px;
+            text-align: center; /* Center the recommended items */
+        }
+
+        #recommended-items h2 {
+            margin-bottom: 20px; /* Add space between "Recommended Items" and items */
+        }
+
+        .item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .item img {
+            width: 100%;
+            max-width: 200px;
+            height: auto;
+            border-radius: 5px;
+        }
+
+        .item h3 {
+            margin-top: 10px;
+            font-size: 18px;
+        }
+
+        .item p {
+            margin-top: 10px;
+            color: #666;
+        }
+
+        .item button {
+            margin-top: 10px;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/listing">List Item</a></li>
+                <li><a href="/buying">Buy Item</a></li>
+                <li><a href="/">Home</a></li> <!-- Updated home link -->
+                <li><a href="/cart">Shopping Cart</a></li>
+                <li><a href="/checkout">Checkout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Logo -->
+    <img src="/static/images/OOPSlogo.svg" alt="OOPS Logo" class="logo">
+
+    <!-- Main Content for the Home Page -->
+    <main>
+        <section id="home">
+            <div class="welcome-message">
+                <h2>Welcome to OOPS</h2>
+                <p class="explore-text">Explore and shop for trendy apparel.</p>
+            </div>
+            <div class="search-bar">
+                <form method="POST" action="/"> <!-- Specify the action attribute -->
+                    <input type="text" name="search" placeholder="Search...">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+        </section>
+        
+        <section id="recommended-items">
+            <h2>Recommended Items</h2>
+            {% for item in items %}
+            <div class="item">
+                <img src="{{ item.ImageURL }}" alt="{{ item.ItemName }}">
+                <h3>{{ item.ItemName }}</h3>
+                <p>{{ item.Description }}</p>
+                <button>Add to Cart</button>
+            </div>
+            {% endfor %}
+        </section>
+    </main>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 OOPS. All rights reserved.</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

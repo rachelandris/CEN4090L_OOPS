@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Item</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Recreate the style from listing.html */
+        body {
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        nav {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border: 2px solid black;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #available-items {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+
+        #available-items ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #available-items li {
+            margin-bottom: 20px;
+        }
+
+        #available-items .item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+        }
+
+        #available-items .item img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/listing">List Item</a></li>
+                <li><a href="/buying">Buy Item</a></li>
+                <li><a href="/">HomePage</a></li>
+                <li><a href="/cart">Shopping Cart</a></li>
+                <li><a href="/checkout">Checkout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="available-items">
+            <h2>Available Items for Purchase</h2>
+            <ul>
+                {% for item in items %}
+                <li>
+                    <div class="item">
+                        <img src="{{ item.image }}" alt="{{ item.name }}">
+                        <h3>{{ item.name }}</h3>
+                        <p>{{ item.description }}</p>
+                        <p>Price: {{ item.price }}</p>
+                        <form action="/add-to-cart" method="POST">
+                            <input type="hidden" name="item_name" value="{{ item.ItemName}}">
+                            <button type="submit">Add to Cart</button>
+                        </form>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 OOPS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

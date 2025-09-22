@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav .container {
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            background-color: black;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #user-info {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #user-info h2 {
+            margin-bottom: 20px;
+        }
+
+        #user-info p {
+            margin-bottom: 10px; /* Add some space between items */
+        }
+
+        #logout-form {
+            text-align: center;
+        }
+
+        #logout-form button {
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            background-color: black;
+            color: white;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/listing">List Item</a></li>
+                <li><a href="/buying">Buy Item</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/cart">Shopping Cart</a></li>
+                <li><a href="/checkout">Checkout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main>
+        <section id="user-info">
+            <h2>User Information</h2>
+            <p>Name: {{ user_details['Username'] }}</p>
+            <p>Email: {{ user_details['Email'] }}</p>
+            <form id="logout-form" action="/logout" method="post">
+                <button type="submit">Logout</button>
+            </form>
+        </section>
+
+        <section id="user-listings">
+            <h2>Listed Items</h2>
+            {% if user_listings %}
+                {% for listing in user_listings %}
+                    <div class="item">
+                        <img src="{{ listing['ImageURL'] }}" alt="{{ listing['ItemName'] }}">
+                        <div class="item-details">
+                            <h3>{{ listing['ItemName'] }}</h3>
+                            <p>{{ listing['Description'] }}</p>
+                            <p>Price: ${{ listing['Price'] }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You have no listed items.</p>
+            {% endif %}
+        </section>
+
+        <section id="purchase-history">
+            <h2>Purchase History</h2>
+            {% if purchase_history %}
+                {% for purchase in purchase_history %}
+                    <div class="item">
+                        <img src="{{ purchase['ImageURL'] }}" alt="{{ purchase['ItemName'] }}">
+                        <div class="item-details">
+                            <h3>{{ purchase['ItemName'] }}</h3>
+                            <p>{{ purchase['Description'] }}</p>
+                            <p>Price: ${{ purchase['Price'] }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>You have no purchase history.</p>
+            {% endif %}
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 OOPS. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

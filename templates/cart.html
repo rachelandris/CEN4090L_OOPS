@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Matching styles from buying.html */
+        body {
+            background-color: #F1EFE7;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            background-color: black;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav ul li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+        }
+
+        main {
+            padding: 20px;
+        }
+
+        #order-summary {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #order-summary .item {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #order-summary .item h3 {
+            margin-top: 0;
+        }
+
+        footer {
+            background-color: black;
+            padding: 20px;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/listing">List Item</a></li>
+                <li><a href="/buying">Buy Item</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/cart">Shopping Cart</a></li>
+                <li><a href="/checkout">Checkout</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main section with order summary -->
+    <main>
+        <section id="order-summary">
+            <h2>Order Summary</h2>
+            {% if cart_items %}
+                {% for item in cart_items %}
+                <div class="item" data-item-id="{{ item['ItemId'] }}">
+                    <h3>{{ item['ItemName'] }}</h3>
+                    <p>{{ item['Description'] }}</p>
+                    <p>Price: ${{ item['Price'] }}</p>
+                    <label for="quantity-{{ item['ItemId'] }}">Quantity:</label>
+                    <input type="number" id="quantity-{{ item['ItemId'] }}"
+                           name="quantity" min="1" value="{{ item['Quantity'] }}" required>
+                </div>
+                {% endfor %}
+                <h3>Total Price: ${{ total_price }}</h3>
+            {% else %}
+                <p>Your cart is empty.</p>
+            {% endif %}
+        </section>
+        <button class="checkout-button">Checkout</button> <!-- Proceed to checkout -->
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 OOPS. All rights reserved.</p>
+        </div>
+    </footer>
+
+     <script>
+    // Handle the "Enter" keypress to update quantity
+    document.querySelectorAll('input[name="quantity"]').forEach((input) => {
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();  // Prevent form submission
+                const itemId = input.closest('.item').getAttribute('data-item-id');
+                const newQuantity = input.value;
+
+                // Send a PUT request to update the quantity
+                fetch(`/cart/${itemId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ quantity: newQuantity })
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        location.reload();  // Reload to reflect the updated total price
+                    }
+                })
+                .catch((error) => console.error('Error updating quantity:', error));
+            }
+        });
+    });
+
+    document.querySelector('.checkout-button').addEventListener('click', () => {
+        window.location.href = '/checkout';  // Redirects to checkout
+    });
+    </script>
+</body>
+</html>
